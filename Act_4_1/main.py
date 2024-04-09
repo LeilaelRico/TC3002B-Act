@@ -7,7 +7,7 @@
 import math
 import matplotlib.pyplot as plt
 
-file_path = '.\\data01.txt'
+file_path = '.\\Act_4_1\\data01.txt'
 decimal = 4
 
 count = 0
