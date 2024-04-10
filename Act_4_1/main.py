@@ -6,9 +6,10 @@
 
 import math
 import matplotlib.pyplot as plt
+import numpy as np
 
-file_path = '.\\Act_4_1\\data01.txt'
-decimal = 4
+file_path = '.\\Act_4_1\\data02.txt'
+decimal = 2
 
 count = 0
 countf = 0
@@ -24,6 +25,8 @@ with open(file_path, 'r') as file:
 file.close()
 
 num_array.sort()
+
+# print(num_array)
 
 N = len(num_array)
 
@@ -50,24 +53,18 @@ intMin = minNum
 
 print('\n---------- INTERVALOS ----------\n')
 
-for number in num_array:
-    if number > intMin and number < intMax:
-        count += 1
-        if intMin + W > maxNum:
-            countf += 1
-        fcount += 1
-    else:
-        print('[', intMin, ' - ', intMax, ') -->', count)
-        bcount += 1
-        count = 0
-        intMin = intMax
-        intMax = round((intMin + W), decimal)
+while intMax <= maxNum:
+    count_interval = sum(1 for num in num_array if intMin <= num < intMax)
+    print('[', intMin, ' - ', intMax, ') -->', count_interval)
+    bcount += 1
+    intMin = intMax
+    intMax = round(intMin + W, decimal)
 
-print('[', intMin, ' - ', intMax, ') -->', countf)
+if intMin < maxNum:
+    count_interval = sum(1 for num in num_array if intMin <= num <= maxNum)
+    print('[', intMin, ' - ', maxNum, ') -->', count_interval)
 
-print('\nSuma de Frecuencias = ', fcount)
-
-plt.hist(num_array, bins=(bcount + 1), edgecolor='black', rwidth=0.8)
+plt.hist(num_array, bins= (bcount + 1), edgecolor='black', rwidth=0.8)
 plt.ylabel('Frecuencia')
 plt.xlabel('Valores')
 plt.show()
