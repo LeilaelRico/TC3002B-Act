@@ -8,8 +8,8 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
-file_path = '.\\Act_4_1\\data02.txt'
-decimal = 2
+file_path = '.\\Act_4_1\\data03.txt'
+decimal = 3
 
 count = 0
 countf = 0
