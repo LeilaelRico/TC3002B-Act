@@ -16,16 +16,14 @@ def lcm(X0, a, c, m, n):
 
 # ---------- Caso de prueba 2 ----------
 def perform_chi_squared_test(data_file):
-    with open(data_file, 'r') as file:
-        data = [float(line.strip()) for line in file]
     intervals = [(i * 0.1, (i + 1) * 0.1) for i in range(10)]
     observed = [0] * 10
-    for number in data:
+    for number in data_file:
         for i, interval in enumerate(intervals):
             if interval[0] <= number < interval[1]:
                 observed[i] += 1
                 break
-    expected = [len(data) / 10] * 10
+    expected = [len(data_file) / 10] * 10
     print("Intervals\t\t\tObserved\tExpected\t(O - E)^2 / E")
     for i in range(10):
         O_minus_E_squared_over_E = (
@@ -86,6 +84,10 @@ def main():
     m = 80
     n = 10
 
+    # Carga de Archivo para ejecicio 2
+    filenameEx2 = ".\\M4_Act_4_2\\chi_data.txt"
+    dataEx2 = read_data_from_file(filenameEx2)
+
     # Carga de Archivo para ejecicio 3
     filename = ".\\M4_Act_4_2\\runs_data.txt"
     data = read_data_from_file(filename)
@@ -96,7 +98,7 @@ def main():
 
     # Llamada Ejecicio 2
     print("\n2) Chi-squared test")
-    perform_chi_squared_test(".\\M4_Act_4_2\\chi_data.txt")
+    perform_chi_squared_test(dataEx2)
 
     # Llamada Ejercicio 3
     print("\n3) Streak runs")
