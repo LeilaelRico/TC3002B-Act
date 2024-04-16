@@ -8,7 +8,7 @@ import math
 import matplotlib.pyplot as plt
 import numpy as np
 
-file_path = '.\\Act_4_1\\data03.txt'
+file_path = '.\\M4_Act_4_1\\data03.txt'
 decimal = 3
 
 count = 0
