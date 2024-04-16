@@ -4,7 +4,6 @@
 * Actividad 4.2: Método Lineal Congruencial y Pruebas de Aleatoriedad
 """
 
-
 # ---------- Caso de Prueba 1 ----------
 def lcm(X0, a, c, m, n):
     numbers = []
@@ -12,22 +11,10 @@ def lcm(X0, a, c, m, n):
     for _ in range(n):
         X = (a * X + c) % m
         numbers.append(X / m)
-    print(numbers)
+    print("The numbers obtained are:", numbers)
     return numbers
 
-
-def chi(observed, expected):
-    chi_squared = sum(
-        ((observed[i] - expected[i]) ** 2) / expected[i] for i in range(len(observed)))
-    critical_value = 16.91 
-    if chi_squared > critical_value:
-        return "H0 is rejected"
-    else:
-        return "H0 is not rejected"
-
 # ---------- Caso de prueba 2 ----------
-
-
 def perform_chi_squared_test(data_file):
     with open(data_file, 'r') as file:
         data = [float(line.strip()) for line in file]
@@ -39,21 +26,27 @@ def perform_chi_squared_test(data_file):
                 observed[i] += 1
                 break
     expected = [len(data) / 10] * 10
-    print("Intervals\tObserved\tExpected\t(O - E)^2 / E")
+    print("Intervals\t\t\tObserved\tExpected\t(O - E)^2 / E")
     for i in range(10):
         O_minus_E_squared_over_E = (
             (observed[i] - expected[i]) ** 2) / expected[i]
-        print(f"[{intervals[i][0]:.4f} - {intervals[i][1]:.4f})\t\t{observed[i]
-                                                                    }\t\t{expected[i]:.4f}\t\t{O_minus_E_squared_over_E:.4f}")
+        print(f"[{intervals[i][0]:.4f} - {intervals[i][1]:.4f})\t\t{observed[i]}\t\t{expected[i]:.4f}\t\t{O_minus_E_squared_over_E:.4f}")
     print("------------------------------------------------------")
-    print(f"Suma: {sum(observed)}\t\tX2 = {
-          sum(O_minus_E_squared_over_E for i in range(10)):.4f}")
+    print(f"Suma: {sum(observed)}\t\tX2 = {sum(O_minus_E_squared_over_E for i in range(10)):.4f}")
     print("\nH0: Generated numbers are not different from the uniform distribution")
     print("H1: Generated numbers are different from the uniform distribution\n")
     print(chi(observed, expected))
 
-# ---------- Caso de Prueba 3 ----------
+def chi(observed, expected):
+    chi_squared = sum(
+        ((observed[i] - expected[i]) ** 2) / expected[i] for i in range(len(observed)))
+    critical_value = 16.91 
+    if chi_squared > critical_value:
+        return "H0 is rejected"
+    else:
+        return "H0 is not rejected"
 
+# ---------- Caso de Prueba 3 ----------
 def calculate_streaks(sequence):
     signs = []
     for i in range(1, len(sequence)):
@@ -65,7 +58,6 @@ def calculate_streaks(sequence):
             signs.append('=')
     return signs
 
-
 def count_runs(signs):
     runs = 1
     for i in range(1, len(signs)):
@@ -73,13 +65,11 @@ def count_runs(signs):
             runs += 1
     return runs
 
-
 def calculate_statistics(signs, runs):
     miu = (2 * len(signs) - 1) / 3
     sigma = ((16 * len(signs) - 29) / 90) ** 0.5
     z_score = (runs - miu) / sigma
     return miu, sigma, z_score
-
 
 def read_data_from_file(filename):
     data = []
@@ -126,15 +116,13 @@ def main():
     print("Sigma =", round(sigma, 5))
     print("Zscore =", round(z_score, 6))
 
+    print("\nH0: Appereance of the numbers is random")
+    print("H1: Appereance of the numbers is not random")
+
     if abs(z_score) < 1.96:
-        print("\nH0: Appereance of the numbers is random")
-        print("H1: Appereance of the numbers is not random")
         print("Since |{}| < |1.96|, H0 is not rejected".format(round(z_score, 2)))
     else:
-        print("\nH0: Appereance of the numbers is random")
-        print("H1: Appereance of the numbers is not random")
         print("Since |{}| >= |1.96|, H0 is rejected".format(round(z_score, 2)))
-
 
 if __name__ == '__main__':
     main()
